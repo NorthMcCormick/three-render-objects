@@ -248,7 +248,7 @@ export default Kapsule({
     // Wipe DOM
     domNode.innerHTML = '';
 
-    console.log('three render objects init - 0.1');
+    console.log('three render objects init - 0.2');
 
     // Add relative container
     domNode.appendChild(state.container = document.createElement('div'));
@@ -274,9 +274,10 @@ export default Kapsule({
     state.mousePos.x = -2; // Initialize off canvas
     state.mousePos.y = -2;
     state.container.addEventListener("mousemove", ev => {
+
+      console.log('mousemove', ev);
       if (state.enablePointerInteraction) {
 
-        console.log('mousemove', ev);
 
         // update the mouse pos
         const offset = getOffset(state.container),
@@ -302,9 +303,9 @@ export default Kapsule({
     }, false);
 
     state.container.addEventListener("touchmove", ev => {
-      if (state.enablePointerInteraction) {
 
-        console.log('touchmove', ev);
+      console.log('touchmove', ev);
+      if (state.enablePointerInteraction) {
 
         // update the mouse pos
         const offset = getOffset(state.container),
@@ -331,12 +332,12 @@ export default Kapsule({
 
     // Handle click events on objs
     state.container.addEventListener('mouseup', ev => {
+
+      console.log('mouse up', ev);
       if (state.ignoreOneClick) {
         state.ignoreOneClick = false; // because of controls end event
         return;
       }
-
-      console.log('mouse up', ev);
 
       if (ev.button === 0) { // left-click
         state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
@@ -349,12 +350,32 @@ export default Kapsule({
 
     // Handle click events on objs
     state.container.addEventListener('click', ev => {
+
+      console.log('click', ev);
+
       if (state.ignoreOneClick) {
         state.ignoreOneClick = false; // because of controls end event
         return;
       }
 
-      console.log('click', ev);
+      if (ev.button === 0) { // left-click
+        state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
+      }
+
+      if (ev.button === 2 && state.onRightClick) { // right-click
+        state.onRightClick(state.hoverObj || null, ev);
+      }
+    }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
+
+    // Handle click events on objs
+    state.container.addEventListener('touchstart', ev => {
+
+      console.log('touchstart', ev);
+
+      if (state.ignoreOneClick) {
+        state.ignoreOneClick = false; // because of controls end event
+        return;
+      }
 
       if (ev.button === 0) { // left-click
         state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
