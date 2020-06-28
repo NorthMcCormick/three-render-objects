@@ -248,7 +248,7 @@ export default Kapsule({
     // Wipe DOM
     domNode.innerHTML = '';
 
-    console.log('three render objects init - 0.2');
+    console.log('three render objects init - 0.3');
 
     // Add relative container
     domNode.appendChild(state.container = document.createElement('div'));
