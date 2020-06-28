@@ -40,7 +40,7 @@
     "accessor-fn": "^1.3.0",
     "kapsule": "^1.13.3",
     "polished": "^3.6.5",
-    "three-orbit-controls": "github:NorthMcCormick/three-orbit-controls#58d97fe19271c874e8ae158521a8251ad5449e57"
+    "three-orbit-controls": "github:NorthMcCormick/three-orbit-controls"
   },
   "peerDependencies": {
     "three": "*"
