@@ -299,8 +299,50 @@ export default Kapsule({
       }
     }, false);
 
+    state.container.addEventListener("touchmove", ev => {
+      if (state.enablePointerInteraction) {
+
+        // update the mouse pos
+        const offset = getOffset(state.container),
+          relPos = {
+            x: ev.pageX - offset.left,
+            y: ev.pageY - offset.top
+          };
+        state.mousePos.x = (relPos.x / state.width) * 2 - 1;
+        state.mousePos.y = -(relPos.y / state.height) * 2 + 1;
+
+        // Move tooltip
+        state.toolTipElem.style.top = `${relPos.y}px`;
+        state.toolTipElem.style.left = `${relPos.x}px`;
+        state.toolTipElem.style.transform = `translate(-${relPos.x / state.width * 100}%, 21px)`; // adjust horizontal position to not exceed canvas boundaries
+      }
+
+      function getOffset(el) {
+        const rect = el.getBoundingClientRect(),
+          scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+          scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
+      }
+    }, false);
+
     // Handle click events on objs
     state.container.addEventListener('mouseup', ev => {
+      if (state.ignoreOneClick) {
+        state.ignoreOneClick = false; // because of controls end event
+        return;
+      }
+
+      if (ev.button === 0) { // left-click
+        state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
+      }
+
+      if (ev.button === 2 && state.onRightClick) { // right-click
+        state.onRightClick(state.hoverObj || null, ev);
+      }
+    }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
+
+    // Handle click events on objs
+    state.container.addEventListener('click', ev => {
       if (state.ignoreOneClick) {
         state.ignoreOneClick = false; // because of controls end event
         return;
