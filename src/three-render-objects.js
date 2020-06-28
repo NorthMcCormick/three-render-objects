@@ -368,22 +368,16 @@ export default Kapsule({
     }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
 
     // Handle click events on objs
-    state.container.addEventListener('touchstart', ev => {
+    state.container.addEventListener('touchend', ev => {
 
-      console.log('touchstart', ev);
+      console.log('touchend', ev);
 
       if (state.ignoreOneClick) {
         state.ignoreOneClick = false; // because of controls end event
         return;
       }
 
-      if (ev.button === 0) { // left-click
-        state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
-      }
-
-      if (ev.button === 2 && state.onRightClick) { // right-click
-        state.onRightClick(state.hoverObj || null, ev);
-      }
+      state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
     }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
 
     state.container.addEventListener('contextmenu', ev => {
