@@ -248,7 +248,7 @@ export default Kapsule({
     // Wipe DOM
     domNode.innerHTML = '';
 
-    console.log('three render objects init');
+    console.log('three render objects init - 0.1');
 
     // Add relative container
     domNode.appendChild(state.container = document.createElement('div'));
@@ -276,6 +276,8 @@ export default Kapsule({
     state.container.addEventListener("mousemove", ev => {
       if (state.enablePointerInteraction) {
 
+        console.log('mousemove', ev);
+
         // update the mouse pos
         const offset = getOffset(state.container),
           relPos = {
@@ -301,6 +303,8 @@ export default Kapsule({
 
     state.container.addEventListener("touchmove", ev => {
       if (state.enablePointerInteraction) {
+
+        console.log('touchmove', ev);
 
         // update the mouse pos
         const offset = getOffset(state.container),
@@ -332,6 +336,8 @@ export default Kapsule({
         return;
       }
 
+      console.log('mouse up', ev);
+
       if (ev.button === 0) { // left-click
         state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
       }
@@ -347,6 +353,8 @@ export default Kapsule({
         state.ignoreOneClick = false; // because of controls end event
         return;
       }
+
+      console.log('click', ev);
 
       if (ev.button === 0) { // left-click
         state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
