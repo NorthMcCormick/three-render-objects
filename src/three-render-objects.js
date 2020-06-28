@@ -248,7 +248,7 @@ export default Kapsule({
     // Wipe DOM
     domNode.innerHTML = '';
 
-    console.log('three render objects init - 0.4');
+    console.log('three render objects init - 0.5');
 
     // Add relative container
     domNode.appendChild(state.container = document.createElement('div'));
@@ -302,7 +302,7 @@ export default Kapsule({
       }
     }, false);
 
-    state.container.addEventListener("touchmove", ev => {
+    /*state.container.addEventListener("touchmove", ev => {
 
       console.log('touchmove', ev);
       if (state.enablePointerInteraction) {
@@ -328,7 +328,7 @@ export default Kapsule({
           scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
       }
-    }, false);
+    }, false);*/
 
     // Handle click events on objs
     state.container.addEventListener('mouseup', ev => {
@@ -349,7 +349,7 @@ export default Kapsule({
     }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
 
     // Handle click events on objs
-    state.container.addEventListener('click', ev => {
+    /*state.container.addEventListener('click', ev => {
 
       console.log('click', ev);
 
@@ -365,10 +365,10 @@ export default Kapsule({
       if (ev.button === 2 && state.onRightClick) { // right-click
         state.onRightClick(state.hoverObj || null, ev);
       }
-    }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
+    }, true);*/ // use capture phase to prevent propagation blocking from controls (specifically for fly)
 
     // Handle click events on objs
-    state.container.addEventListener('touchend', ev => {
+    /*state.container.addEventListener('touchend', ev => {
 
       console.log('touchend', ev);
 
@@ -378,7 +378,7 @@ export default Kapsule({
       }
 
       state.onClick(state.hoverObj || null, ev); // trigger background clicks with null
-    }, true); // use capture phase to prevent propagation blocking from controls (specifically for fly)
+    }, true);*/ // use capture phase to prevent propagation blocking from controls (specifically for fly)
 
     state.container.addEventListener('contextmenu', ev => {
       if (state.onRightClick) ev.preventDefault(); // prevent default contextmenu behavior and allow mouseup to fire instead
